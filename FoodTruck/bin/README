@@ -1,0 +1,23 @@
+Instructions to build and run the console application
+
+Compile from command prompt from the folder you unzipped to which contains Driver.java, FoodTruckFinder.java, 
+QueryBuilder.java files:
+
+javac *.java
+
+Run with:
+java Driver
+
+Alternatively, load the 3 .java files in an IDE (e.g., Eclipse) Java project and run from there.
+
+
+Considerations about creating a consumer application
+
+The SODA API is heavily throttled. Currently, at only 1000 request/hour, it is not suitable
+for supporting a large scale consumer application. For the particular "Food truck" use cases, the application
+could use a middle tier which would cache the data per region, as the data is likely not 
+changing often. One can use dedicated servers for different regions (based on the size of the data).
+The cache should be refreshed at reasonable time intervals when traffic is light (e.g., every night).
+
+The client app can also benefit from caching the last few queries (e.g., a common use case is to query
+once per day before lunch).
