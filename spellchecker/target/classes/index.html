@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Spell checker form</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+	
+</script>
+</head>
+<body>
+	<form action="/spell-check" id="searchForm">
+		<input type="text" name="w" placeholder="Search..."> <input
+			type="submit" value="Search">
+	</form>
+
+	<div id="result"></div>
+
+	<script>
+		$("#searchForm").submit(
+				function(event) {
+					$("#result").empty()
+					event.preventDefault();
+
+					var $form = $(this), word = $form.find("input[name='w']")
+							.val(), url = $form.attr("action");
+
+					var g = $.get(url, {
+						word : word
+					});
+
+					g.done(function(data) {
+						$("#result").empty().append(data.toString());
+					});
+				});
+	</script>
+</body>
+</html>

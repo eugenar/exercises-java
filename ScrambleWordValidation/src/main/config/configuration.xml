@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<configuration>
+	<languages>
+		<language>
+			<name>en</name>
+			<validations>
+				<validation>
+					<rules>
+						<rule>
+							<name>scramble.NotScrambledValidationRule
+							</name>
+						</rule>
+					</rules>
+					<result>not</result>
+				</validation>
+				<validation>
+					<rules>
+						<rule>
+							<name>scramble.FirstOrConsecutivePositionValidationRule
+							</name>
+						</rule>
+						<rule>
+							<name>scramble.RealWordValidationRule
+							</name>
+							<negation>true</negation>
+						</rule>
+					</rules>
+					<result>poor</result>
+				</validation>
+				<validation>
+					<rules>
+						<rule>
+							<name>scramble.NoSamePositionValidationRule
+							</name>
+						</rule>
+						<rule>
+							<name>scramble.RealWordValidationRule
+							</name>
+						</rule>
+					</rules>
+					<result>hard</result>
+				</validation>
+				<!-- default -->
+				<validation>
+					<result>fair</result>
+				</validation>
+			</validations>
+			<vowels>AEIOUY</vowels>
+			<consonants>BCDFGHJKLMNPQRSTVWXZ</consonants>
+			<combinations>AI,AY,EA,EE,EO,IO,OA,OO,OY,YA,YO,YU,BL,BR,CH,CK,CR
+			</combinations>
+		</language>
+	</languages>
+</configuration>
