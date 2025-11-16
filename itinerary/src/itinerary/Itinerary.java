@@ -4,14 +4,51 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Itinerary {
 
 	public static void main(String[] args) {
-		String[][] segments = new String[][] { { "d", "e" }, { "b", "c" }, { "a", "b" }, { "e", "f" }, { "c", "d" } };
-		List<String[]> itinerary = trip(segments);
-		for (String[] seg : itinerary)
-			System.out.println(String.format("(%s, %s)", seg[0], seg[1]));
+		Scanner in = new Scanner(System.in);
+
+		String[][] segments;
+		try {
+			System.out.print("Enter number of segments: ");
+			int n = Integer.parseInt(in.nextLine().trim());
+			if (n <= 0) {
+				throw new IllegalArgumentException("Number of segments must be positive");
+			}
+			segments = new String[n][2];
+			for (int i = 0; i < n; i++) {
+				System.out.print(String.format("Enter segment %d (from to): ", i + 1));
+				String line = in.nextLine().trim();
+				if (line.isEmpty()) {
+					throw new IllegalArgumentException("Empty segment input");
+				}
+				String[] parts = line.split("\\s+");
+				if (parts.length != 2) {
+					throw new IllegalArgumentException("Each segment must contain exactly two tokens");
+				}
+				segments[i][0] = parts[0];
+				segments[i][1] = parts[1];
+			}
+		} catch (Exception e) {
+			System.out.println("Invalid or no console input detected. Falling back to sample segments.");
+			segments = new String[][] { { "d", "e" }, { "b", "c" }, { "a", "b" }, { "e", "f" }, { "c", "d" } };
+		} finally {
+			// do not close System.in scanner if you plan to reuse System.in elsewhere;
+			// closing here is fine for small CLI programs that will exit.
+			 in.close();
+		}
+
+		try {
+			List<String[]> itinerary = trip(segments);
+			for (String[] seg : itinerary) {
+				System.out.println(String.format("(%s, %s)", seg[0], seg[1]));
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Error building itinerary: " + e.getMessage());
+		}
 	}
 
 	static List<String[]> trip(String[][] segments) {
